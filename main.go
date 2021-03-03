@@ -1,29 +1,19 @@
 package main
 
 import (
-	"github.com/abusizhishen/sql2Go/parser"
+	"github.com/abusizhishen/sql2go/parser"
+	"github.com/abusizhishen/sql2go/src"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 func main() {
-	calc()
-}
-
-func calc()  {
 	input,err :=  antlr.NewFileStream("test.sql")
 	if err != nil{
 		panic(err)
 	}
-	lexer := parser.NewsqlLexer(input)
+	lexer := parser.NewSqlLexer(input)
 	tokens := antlr.NewCommonTokenStream(lexer,antlr.LexerDefaultTokenChannel)
-	p := parser.NewsqlParser(tokens)
+	p := parser.NewSqlParser(tokens)
 
-	antlr.ParseTreeWalkerDefault.Walk(SqlBaseListen{},p.Table())
-}
-func strStream(s string)  {
-	calc()
-}
-
-type SqlBaseListen struct {
-	*parser.BasesqlListener
+	antlr.ParseTreeWalkerDefault.Walk(&src.Listener{}, p.Table())
 }

@@ -1,9 +1,9 @@
-grammar sql;
+grammar Sql;
 
 Id:[a-zA-Z_-]+;
 Int:[0-9]+;
-NotNull: [Nn][Oo][Tt] [Nn][Uu][Ll][Ll];
-WS:[\r\n ]+ ->skip;
+NotNull: [Nn][Oo][Tt] ' '* [Nn][Uu][Ll][Ll];
+WS:[\r\n \t]+ ->skip;
 statement
     : '"' STRING '"'
     |'\'' STRING '\''
@@ -11,9 +11,9 @@ statement
 tableName :'`' Id '`';
 defaultStatement: 'DEFAULT' statement;
 
-comment: 'COMMENT' statement;
+comment: 'COMMENT' STRING?;
 
-Type
+FieldType
     :'char'
     |'varchar'
     |'int'
@@ -30,7 +30,8 @@ field
     ;
 
 STRING
-   : '"' (ESC | SAFECODEPOINT|[\-:]|SAFECODEPOINT)* '"'
+   : '"' (ESC | SAFECODEPOINT)* '"'
+   | '\'' (ESC | SAFECODEPOINT)* '\''
    ;
 
 
@@ -47,15 +48,16 @@ fragment SAFECODEPOINT
    : [\u0000-\u001F]
    ;
 fragment INT
-   : '0' | [1-9] [0-9]*
+   : [0-9]*
    ;
 
 fragment EXP
    : [Ee] [+\-]? INT
    ;
 
+fieldName: '`' Id '`';
 
-fieldStatement: field Type length? NotNull? defaultStatement? comment?;
+fieldStatement: field fileType=Id length? NotNull? defaultStatement? comment?;
 table: 'CREATE' 'TABLE' tableName '('
     fieldStatement (',' fieldStatement)*
 ')';

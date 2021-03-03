@@ -1,11 +1,11 @@
-// Code generated from sql.g4 by ANTLR 4.8. DO NOT EDIT.
+// Code generated from Sql.g4 by ANTLR 4.8. DO NOT EDIT.
 
-package parser // sql
+package parser // Sql
 
 import "github.com/antlr/antlr4/runtime/Go/antlr"
 
-// sqlListener is a complete listener for a parse tree produced by sqlParser.
-type sqlListener interface {
+// SqlListener is a complete listener for a parse tree produced by SqlParser.
+type SqlListener interface {
 	antlr.ParseTreeListener
 
 	// EnterStatement is called when entering the statement production.
@@ -25,6 +25,9 @@ type sqlListener interface {
 
 	// EnterField is called when entering the field production.
 	EnterField(c *FieldContext)
+
+	// EnterFieldName is called when entering the fieldName production.
+	EnterFieldName(c *FieldNameContext)
 
 	// EnterFieldStatement is called when entering the fieldStatement production.
 	EnterFieldStatement(c *FieldStatementContext)
@@ -49,6 +52,9 @@ type sqlListener interface {
 
 	// ExitField is called when exiting the field production.
 	ExitField(c *FieldContext)
+
+	// ExitFieldName is called when exiting the fieldName production.
+	ExitFieldName(c *FieldNameContext)
 
 	// ExitFieldStatement is called when exiting the fieldStatement production.
 	ExitFieldStatement(c *FieldStatementContext)

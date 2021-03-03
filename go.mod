@@ -1,4 +1,4 @@
-module github.com/abusizhishen/sql2Go
+module github.com/abusizhishen/sql2go
 
 go 1.15
 
